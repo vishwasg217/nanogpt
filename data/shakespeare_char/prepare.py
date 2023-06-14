@@ -13,7 +13,7 @@ import fire
 
 def prepare(url):
     print(f"downloading {url}") 
-    data_url = url
+    data_url = url + '/raw'
 
     # download the dataset
     input_file_path = os.path.join(os.path.dirname(__file__), 'input.txt')

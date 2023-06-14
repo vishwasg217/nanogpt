@@ -8,7 +8,7 @@ class PerformanceTests(HttpUser):
 
     @task(1)
     def stress_test(self):
-        res = self.client.get("/generate-text")
+        res = self.client.post("/generate-text", json={"start": "london"})
         print(res.text)
 
 def use_model(start):
