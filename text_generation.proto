@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package textgeneration;
+
+service TextGenerationService {
+  rpc GenerateText(GenerationRequest) returns (GenerationResponse) {}
+}
+
+message GenerationRequest {
+  string start = 1;
+}
+
+message GenerationResponse {
+  string output_text = 1;
+}

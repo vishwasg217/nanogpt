@@ -52,14 +52,6 @@ python test.py --start <start_text>
 
 Replace `<start_text>` with the desired starting text for text generation.
 
-## Using the Script
-
-To perform all the steps mentioned above in a single command, you can execute the shell script provided in the repository:
-
-```
-chmod +x script.sh
-./script.sh
-```
 
 ## Running the API
 
@@ -87,6 +79,67 @@ curl -X 'POST' \
 ```
 
 Follow the prompt and enter the desired starting text when prompted. The generated text will be displayed in the terminal.
+
+Alternatively, you can also run the `script.sh` file to prepare, train and run the API in one go.
+
+```
+chmod +x script.sh
+./script.sh
+```
+
+## gRPC Implementation
+
+To run the gRPC implementation, follow these steps:
+
+1. Start the gRPC server by running the `rpc.py` script:
+   ```bash
+   python rpc.py
+   ```
+
+   This will start the gRPC server and make it ready to accept requests.
+
+2. Start the FastAPI server by running the `server2:app` with `uvicorn`:
+   ```bash
+   uvicorn server2:app --host 0.0.0.0 --port 8080
+   ```
+
+   This will start the FastAPI server, which will act as a client to communicate with the gRPC server.
+
+3. Enter the start value for text generation when prompted:
+   ```bash
+   echo -e "Enter the start value: "
+   read start
+   ```
+
+   This will allow you to input the start value, which will be used as a parameter for text generation.
+
+4. Generate the text by making an HTTP request to the FastAPI server:
+   ```bash
+   echo -e "\nGenerating Text...\n"
+
+   curl -X 'POST' \
+     'http://127.0.0.1:8080/generate-text' \
+     -H 'accept: application/json' \
+     -H 'Content-Type: application/json' \
+     -d '{
+     "start": "'"$start"'"
+   }'
+
+   echo -e "\n\ntext generation done!!\n"
+   ```
+
+   This will send an HTTP POST request to the FastAPI server with the specified start value. The server will then forward the request to the gRPC server for text generation.
+
+5. Observe the generated text in the response from the FastAPI server.
+
+Ensure that both the gRPC server and FastAPI server are running simultaneously before making the HTTP request for text generation.
+
+Alternatively, you can also run the `grpc.sh` script to run the gRPC implementation.
+
+```
+chmod +x grpc.sh
+./grpc.sh
+```
 
 You have now successfully set up and used NanoGPT for text generation!
 

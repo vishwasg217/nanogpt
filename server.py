@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from sample import generate_text
 
+
 class InputText(BaseModel):
     start: str
 
